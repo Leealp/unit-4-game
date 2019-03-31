@@ -36,7 +36,7 @@ var crystal = {
 
 var wincount = 0;
 var losscount = 0;
-var goaltoreach = 0;
+var goaltoreach = null;
 var mycurrentscore = 0;
 
 // -------------------------------------------------------
@@ -58,21 +58,24 @@ var gameready = function(){
 
 	var randomNumber = function(min,max){
 
-	return Math.floor(Math.random()*(max-min+1)) + min;
-}
+		return Math.floor(Math.random()*(max-min+1)) + min;
+	}
 
-	var goaltoreach  = randomNumber(19,120);
+	goaltoreach  = randomNumber(19,120);
 
 	crystal.crystalOne.value = randomNumber(1,12);
 	crystal.crystaltwo.value = randomNumber(1,12);
 	crystal.crystalthree.value = randomNumber(1,12);
 	crystal.crystalfour.value = randomNumber(1,12);
 
+	mycurrentscore = 0;
+
 	$("#currentscore").html(mycurrentscore);
 	$("#goaltoreach").html(goaltoreach);
 	$("#losscount").html(losscount);
 	$("#wincount").html(wincount);
-
+	console.log(goaltoreach); 
+	
 }
 
 
@@ -90,6 +93,7 @@ function clickfunctions(){
  $("#one").click(function(){
  	$("#currentscore").html(mycurrentscore+onevalue);
  	mycurrentscore = mycurrentscore + onevalue;
+ 	winloose();
  
  });
 
@@ -97,6 +101,7 @@ function clickfunctions(){
  $("#two").click(function(){
  	$("#currentscore").html(mycurrentscore+twovalue);
  	mycurrentscore = mycurrentscore + twovalue;
+ 	winloose();
 
  });
 
@@ -104,11 +109,13 @@ function clickfunctions(){
  $("#three").click(function(){
 	$("#currentscore").html(mycurrentscore+threevalue);
  	mycurrentscore = mycurrentscore + threevalue;
+ 	winloose();
  });
 
  $("#four").click(function(){
 	$("#currentscore").html(mycurrentscore+fourvalue);
  	mycurrentscore = mycurrentscore + fourvalue;
+ 	winloose();
  });
 
 }
@@ -132,15 +139,18 @@ function winloose(){
 		$("#wincount").html(wincount);
 	
 		console.log("you won");
+		gameready();
 
 	}
-		else if (mycurrentscore > goaltoreach){
-			losscount++
-			$("#losscount").html(losscount);
-			alert("you lost");
-			console.log("you lost");
+
+	if (mycurrentscore > goaltoreach){
+		console.log(mycurrentscore, goaltoreach)
+		losscount++
+		$("#losscount").html(losscount);
+		console.log("you lost");
+		gameready();
 		
-		}
+	}
 
 		// lossText.textContent = losscount;
   //       winText.textContent = wincount;
@@ -153,7 +163,7 @@ function winloose(){
 // console.log(wincount);
 // console.log(losscount);
 
-winloose();
+
 //         // lossText.textContent = losscount;
 //         // winText.textContent = wincount;
 
